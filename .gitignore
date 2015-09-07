@@ -91,3 +91,21 @@ LOCK
 LOG*
 CURRENT
 MANIFEST-*
+
+#caffe directory
+CMakeLists.txt
+CONTRIBUTORS.md
+INSTALL.md
+LICENSE
+Makefile
+Makefile.config.example
+README.md
+caffe.cloc
+cmake/
+docs/
+examples/
+matlab/
+python/
+scripts/
+tools/
+
