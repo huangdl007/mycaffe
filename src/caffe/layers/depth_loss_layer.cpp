@@ -28,13 +28,13 @@ namespace caffe {
 				//predicted depth maybe < 0
 				bottom0_log[i] = log(abs(bottom[0]->cpu_data()[i])+1);
 				bottom1_log[i] = log(bottom[1]->cpu_data()[i]);
-				
+				/*
 				if(i < 5)
 				{
 					LOG(INFO) << "pre depth: " << bottom[0]->cpu_data()[i] <<  ", log: " << bottom0_log[i];
 					//LOG(INFO) << "tru depth: " << bottom[1]->cpu_data()[i] <<  ", log: " << bottom1_log[i];
 				}
-				
+				*/
 			}
 
 			//compute di = logY - logY*
@@ -85,11 +85,12 @@ namespace caffe {
 				Dtype* bottom_data = bottom[0]->mutable_cpu_data();
 				for (int i = 0; i < count; i++) {
 					bottom_diff[i] = Dtype(2) * diff_data[i] / count / bottom_data[i] - Dtype(2) * gamma * log_sum / count / count / diff_data[i];
-
+					/*
 					if(i<5)
 					{
 						LOG(INFO) << "bottom_diff: " << bottom_diff[i];
 					}
+					*/
 				}
 			}
 	}

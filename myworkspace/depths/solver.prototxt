@@ -13,4 +13,4 @@ max_iter: 1000
 snapshot: 1000
 snapshot_prefix: "NYU_DEPTH"
 
-solver_mode: CPU
+solver_mode: GPU
