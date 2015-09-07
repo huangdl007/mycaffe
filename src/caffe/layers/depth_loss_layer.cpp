@@ -91,7 +91,6 @@ namespace caffe {
 						LOG(INFO) << "bottom_diff: " << bottom_diff[i];
 					}
 				}
-				//ta da
 			}
 	}
 
