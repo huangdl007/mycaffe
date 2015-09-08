@@ -182,7 +182,7 @@ layer{
 	}
 }
 layer{
-	name: "fc"
+	name: "fc6"
 	type: "InnerProduct"
 	top: "fc"
 	bottom: "pool5"

@@ -326,6 +326,7 @@ class DepthLossLayer : public LossLayer<Dtype> {
   //    const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 
   Blob<Dtype> diff_;
+  Blob<Dtype> d_;
   double gamma;
 };
 
