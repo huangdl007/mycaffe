@@ -6,7 +6,7 @@ layer{
 	top: "groundtruth_depth"
 	depth_data_param{
 		source: "source.txt"
-		batch_size: 1
+		batch_size: 32
 	}
 }
 layer{
@@ -225,8 +225,8 @@ layer{
 	inner_product_param{
 		num_output: 5476
 		weight_filler{
-			type: "constant"
-			value: 0.01
+			type: "gaussian"
+			std: 0.001
 		}
 	}
 }
