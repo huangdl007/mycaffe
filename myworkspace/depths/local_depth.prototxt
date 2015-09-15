@@ -213,7 +213,8 @@ layer{
 		kernel_size: 9
 		stride: 2
 		weight_filler{
-			type: "xavier"
+			type: "gaussian"
+			std: 0.01
 		}
 		bias_filler {
       		type: "constant"
@@ -261,7 +262,8 @@ layer{
 		stride: 1
 		pad: 2
 		weight_filler{
-			type: "xavier"
+			type: "gaussian"
+			std: 0.01
 		}
 		bias_filler {
       		type: "constant"
@@ -288,7 +290,8 @@ layer{
 		stride: 1
 		pad: 2
 		weight_filler{
-			type: "xavier"
+			type: "gaussian"
+			std: 0.01
 		}
 		bias_filler {
       		type: "constant"
