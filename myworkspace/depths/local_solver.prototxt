@@ -1,7 +1,7 @@
 net: "local_depth.prototxt"
 
 
-base_lr: 0.005
+base_lr: 0.001
 lr_policy: "fixed"
 momentum: 0.9
 weight_decay: 0.004

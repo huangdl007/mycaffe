@@ -1,0 +1,70 @@
+name: "NYUDepth"
+input: "data"
+input_dim: 32
+input_dim: 3
+input_dim: 304
+input_dim: 304
+layer{
+	name: "f-conv1"
+	type: "Convolution"
+	top: "f-conv1"
+	bottom: "data"
+	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 2 decay_mult: 0 }
+	convolution_param{
+		num_output: 64
+		kernel_size: 9
+		stride: 2
+	}
+}
+layer{
+	name: "f-relu1"
+	type: "ReLU"
+	top: "f-conv1"
+	bottom: "f-conv1"
+}
+layer{
+	name: "f-pool1"
+	type: "Pooling"
+	top: "f-pool1"
+	bottom: "f-conv1"
+	pooling_param{
+		kernel_size: 2
+		pool: MAX
+		stride: 2
+	}
+}
+layer{
+	name: "f-conv3"
+	type: "Convolution"
+	top: "f-conv3"
+	bottom: "f-pool1"
+	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 2 decay_mult: 0 }
+	convolution_param{
+		num_output: 64
+		kernel_size: 5
+		stride: 1
+		pad: 2
+	}
+}
+layer{
+	name: "f-relu3"
+	type: "ReLU"
+	top: "f-conv3"
+	bottom: "f-conv3"
+}
+layer{
+	name: "f-conv4"
+	type: "Convolution"
+	top: "f-conv4"
+	bottom: "f-conv3"
+	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 2 decay_mult: 0 }
+	convolution_param{
+		num_output: 1
+		kernel_size: 5
+		stride: 1
+		pad: 2
+	}
+}
