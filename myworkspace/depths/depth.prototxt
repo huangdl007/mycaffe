@@ -148,7 +148,7 @@ layer{
 layer{
 	name: "pool5"
 	type: "Pooling"
-	top: "pool1"
+	top: "pool5"
 	bottom: "conv5"
 	pooling_param{
 		kernel_size: 2
