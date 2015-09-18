@@ -7,10 +7,10 @@ momentum: 0.9
 weight_decay: 0.004
 
 
-display: 1000
+display: 10
 max_iter: 200000
 
-snapshot: 100000
+snapshot: 30
 snapshot_prefix: "NYU_DEPTH_LOCAL"
 
 solver_mode: GPU
