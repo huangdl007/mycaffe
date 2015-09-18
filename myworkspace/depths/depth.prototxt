@@ -15,7 +15,6 @@ layer{
 	top: "conv1"
 	bottom: "data"
 	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 96
 		kernel_size: 11
@@ -24,10 +23,6 @@ layer{
 			type: "gaussian"
 			std: 0.01
 		}
-		bias_filler {
-      		type: "constant"
-      		value: 0
-    	}
 	}
 }
 layer{
@@ -53,7 +48,6 @@ layer{
 	top: "conv2"
 	bottom: "pool1"
 	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 256
 		kernel_size: 5
@@ -63,10 +57,6 @@ layer{
 			type: "gaussian"
 			std: 0.01
 		}
-		bias_filler {
-      		type: "constant"
-      		value: 0.1
-    	}
 	}
 }
 layer{
@@ -92,7 +82,6 @@ layer{
 	top: "conv3"
 	bottom: "pool2"
 	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 384
 		kernel_size: 3
@@ -102,10 +91,6 @@ layer{
 			type: "gaussian"
 			std: 0.01
 		}
-		bias_filler {
-      		type: "constant"
-      		value: 0
-    	}
 	}
 }
 layer{
@@ -120,7 +105,6 @@ layer{
 	top: "conv4"
 	bottom: "conv3"
 	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 384
 		kernel_size: 3
@@ -130,10 +114,6 @@ layer{
 			type: "gaussian"
 			std: 0.01
 		}
-		bias_filler {
-      		type: "constant"
-      		value: 0.1
-    	}
 	}
 }
 layer{
@@ -148,7 +128,6 @@ layer{
 	top: "conv5"
 	bottom: "conv4"
 	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 256
 		kernel_size: 3
@@ -158,10 +137,6 @@ layer{
 			type: "gaussian"
 			std: 0.01
 		}
-		bias_filler {
-      		type: "constant"
-      		value: 0.1
-    	}
 	}
 }
 layer{
@@ -171,33 +146,17 @@ layer{
 	bottom: "conv5"
 }
 layer{
-	name: "pool5"
-	type: "Pooling"
-	top: "pool5"
-	bottom: "conv5"
-	pooling_param{
-		kernel_size: 2
-		pool: MAX
-		stride: 2
-	}
-}
-layer{
 	name: "fc6"
 	type: "InnerProduct"
 	top: "fc"
-	bottom: "pool5"
+	bottom: "conv5"
 	param { lr_mult: 100 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
 	inner_product_param{
 		num_output: 4096
 		weight_filler{
 			type: "gaussian"
 			std: 0.005
 		}
-		bias_filler {
-      		type: "constant"
-      		value: 0.1
-    	}
 	}
 }
 layer {
