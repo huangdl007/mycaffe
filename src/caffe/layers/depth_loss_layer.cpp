@@ -22,7 +22,7 @@ namespace caffe {
 			int count = bottom[0]->count();
 			Dtype* bottom1_log = new Dtype[count];
 
-			//compute log for Y and Y*
+			//compute log for Y*
 			for (int i = 0; i < count; i++)
 			{
 				bottom1_log[i] = log(bottom[1]->cpu_data()[i]);
@@ -45,6 +45,7 @@ namespace caffe {
 				d_sum += d_data[i];
 			}
 
+			LOG(INFO) << "dot: " << dot << "d_sum: " << d_sum;
 			//double gamma = 0.5;
 			Dtype loss = dot / count - gamma * d_sum * d_sum / count / count;
 
@@ -60,11 +61,11 @@ namespace caffe {
 		const vector<Blob<Dtype>*>& bottom) {
 			if (propagate_down[1]) {
 				LOG(FATAL) << this->type()
-					<< " Layer cannot backpropagate to label inputs.";
+					<< " Layer cannot backpropagate to depth inputs.";
 			}
 			if (propagate_down[0]) {
 				int count = bottom[0]->count();
-
+				LOG(INFO) << "hello kugou";
 				Dtype d_sum = Dtype(0);
 				Dtype* d_data = d_.mutable_cpu_data();
 				for (int i = 0; i < count; i++) {

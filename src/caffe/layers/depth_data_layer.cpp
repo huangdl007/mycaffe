@@ -28,7 +28,7 @@ namespace caffe {
 		while(infile >> dep) {
 			depths[index++] = dep;
 		}
-
+		infile.close();
 	}
 
 	template <typename Dtype>

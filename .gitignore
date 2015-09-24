@@ -104,6 +104,7 @@ caffe.cloc
 cmake/
 docs/
 examples/
+myworkspace/
 matlab/
 python/
 scripts/
