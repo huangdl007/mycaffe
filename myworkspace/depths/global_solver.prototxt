@@ -7,10 +7,10 @@ momentum: 0.9
 weight_decay: 0.004
 
 
-display: 1
+display: 100
 max_iter: 200000
 
 snapshot: 200000
-snapshot_prefix: "NYU_DEPTH"
+snapshot_prefix: "NYU_DEPTH_GLOBAL"
 
-solver_mode: CPU
+solver_mode: GPU
