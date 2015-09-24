@@ -5,6 +5,198 @@ input_dim: 3
 input_dim: 304
 input_dim: 304
 layer{
+	name: "conv1"
+	type: "Convolution"
+	top: "conv1"
+	bottom: "data"
+	param { lr_mult: 0 decay_mult: 0 }
+	param { lr_mult: 0 decay_mult: 0 }
+	propagate_down: false
+	convolution_param{
+		num_output: 96
+		kernel_size: 11
+		stride: 4
+	}
+}
+layer{
+	name: "relu1"
+	type: "ReLU"
+	top: "conv1"
+	bottom: "conv1"
+}
+layer{
+	name: "pool1"
+	type: "Pooling"
+	top: "pool1"
+	bottom: "conv1"
+	pooling_param{
+		kernel_size: 2
+		pool: MAX
+		stride: 2
+	}
+}
+layer{
+	name: "conv2"
+	type: "Convolution"
+	top: "conv2"
+	bottom: "pool1"
+	param { lr_mult: 0 decay_mult: 0 }
+	param { lr_mult: 0 decay_mult: 0 }
+	propagate_down: false
+	convolution_param{
+		num_output: 256
+		kernel_size: 5
+		stride: 1
+		pad: 2
+	}
+}
+layer{
+	name: "relu2"
+	type: "ReLU"
+	top: "conv2"
+	bottom: "conv2"
+}
+layer{
+	name: "pool2"
+	type: "Pooling"
+	top: "pool2"
+	bottom: "conv2"
+	pooling_param{
+		kernel_size: 2
+		pool: MAX
+		stride: 2
+	}
+}
+layer{
+	name: "conv3"
+	type: "Convolution"
+	top: "conv3"
+	bottom: "pool2"
+	param { lr_mult: 0 decay_mult: 0 }
+	param { lr_mult: 0 decay_mult: 0 }
+	propagate_down: false
+	convolution_param{
+		num_output: 384
+		kernel_size: 3
+		stride: 1
+		pad: 1
+	}
+}
+layer{
+	name: "relu3"
+	type: "ReLU"
+	top: "conv3"
+	bottom: "conv3"
+}
+layer{
+	name: "conv4"
+	type: "Convolution"
+	top: "conv4"
+	bottom: "conv3"
+	param { lr_mult: 0 decay_mult: 0 }
+	param { lr_mult: 0 decay_mult: 0 }
+	propagate_down: false
+	convolution_param{
+		num_output: 384
+		kernel_size: 3
+		stride: 1
+		pad: 1
+	}
+}
+layer{
+	name: "relu4"
+	type: "ReLU"
+	top: "conv4"
+	bottom: "conv4"
+}
+layer{
+	name: "conv5"
+	type: "Convolution"
+	top: "conv5"
+	bottom: "conv4"
+	param { lr_mult: 0 decay_mult: 0 }
+	param { lr_mult: 0 decay_mult: 0 }
+	propagate_down: false
+	convolution_param{
+		num_output: 256
+		kernel_size: 3
+		stride: 1
+		pad: 1
+	}
+}
+layer{
+	name: "relu5"
+	type: "ReLU"
+	top: "conv5"
+	bottom: "conv5"
+}
+layer{
+	name: "pool5"
+	type: "Pooling"
+	top: "pool5"
+	bottom: "conv5"
+	pooling_param{
+		kernel_size: 2
+		pool: MAX
+		stride: 2
+	}
+}
+layer{
+	name: "fc6"
+	type: "InnerProduct"
+	top: "fc"
+	bottom: "pool5"
+	param { lr_mult: 0 decay_mult: 0 }
+	param { lr_mult: 0 decay_mult: 0 }
+	propagate_down: false
+	inner_product_param{
+		num_output: 4096
+	}
+}
+layer {
+  name: "relu6"
+  type: "ReLU"
+  bottom: "fc"
+  top: "fc"
+}
+layer {
+  name: "drop6"
+  type: "Dropout"
+  bottom: "fc"
+  top: "fc"
+  dropout_param {
+    dropout_ratio: 0.5
+  }
+}
+layer{
+	name: "predicted-depth"
+	type: "InnerProduct"
+	top: "predicted_depth"
+	bottom: "fc"
+	param { lr_mult: 0 decay_mult: 0 }
+	param { lr_mult: 0 decay_mult: 0 }
+	propagate_down: false
+	inner_product_param{
+		num_output: 5476
+	}
+}
+layer{
+	name: "reshape_depth"
+	type: "Reshape"
+	top: "reshape_depth"
+	bottom: "predicted_depth"
+	propagate_down: false
+	reshape_param{
+		shape{
+			dim: 32
+			dim: 1
+			dim: 74
+			dim: 74
+		}
+	}
+
+}
+layer{
 	name: "f-conv1"
 	type: "Convolution"
 	top: "f-conv1"
@@ -12,7 +204,7 @@ layer{
 	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
-		num_output: 64
+		num_output: 63
 		kernel_size: 9
 		stride: 2
 	}
@@ -34,11 +226,21 @@ layer{
 		stride: 2
 	}
 }
+layer {
+  name: "concat"
+  type: "Concat"
+  bottom: "f-pool1"
+  bottom: "reshape_depth"
+  top: "f-conv2"
+  concat_param {
+    axis: 1
+  }
+}
 layer{
 	name: "f-conv3"
 	type: "Convolution"
 	top: "f-conv3"
-	bottom: "f-pool1"
+	bottom: "f-conv2"
 	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{

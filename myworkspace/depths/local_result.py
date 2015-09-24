@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 
 deploy_ptototxt = 'local_deploy.prototxt'
-model = 'NYU_DEPTH_LOCAL_iter_200000.caffemodel'
+model = 'NYU_DEPTH_LOCAL_iter_100000.caffemodel'
 
 #caffe.set_mode_cpu()
 caffe.set_device(0)

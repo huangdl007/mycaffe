@@ -290,20 +290,14 @@ layer{
 		stride: 1
 		pad: 2
 		weight_filler{
-			type: "gaussian"
-			std: 0.01
+			type: "constant"
+			value: 0.001
 		}
 		bias_filler {
       		type: "constant"
       		value: 0
     	}
 	}
-}
-layer{
-	name: "f-relu4"
-	type: "ReLU"
-	top: "f-conv4"
-	bottom: "f-conv4"
 }
 layer{
 	name: "loss"
