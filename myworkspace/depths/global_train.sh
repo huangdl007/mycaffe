@@ -3,7 +3,7 @@
 TOOLS=./../../build/tools
 
 $TOOLS/caffe train \
-    --solver=solver.prototxt
+    --solver=global_solver.prototxt
 
 # reduce learning rate by factor of 10
 #$TOOLS/caffe train \
