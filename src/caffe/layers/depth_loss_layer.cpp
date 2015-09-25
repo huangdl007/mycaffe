@@ -20,20 +20,12 @@ namespace caffe {
 	void DepthLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 		const vector<Blob<Dtype>*>& top) {
 			int count = bottom[0]->count();
-			Dtype* bottom1_log = new Dtype[count];
 
-			//compute log for Y*
-			for (int i = 0; i < count; i++)
-			{
-				bottom1_log[i] = log(bottom[1]->cpu_data()[i]);
-				
-			}
-
-			//compute di
+			//compute Yi - Yi'
 			caffe_sub(
 				count,
 				bottom[0]->cpu_data(),
-				bottom1_log,
+				bottom[1]->cpu_data(),
 				d_.mutable_cpu_data());
 
 			//part1 of Loss
@@ -49,9 +41,6 @@ namespace caffe {
 			Dtype loss = dot / count - gamma * d_sum * d_sum / count / count;
 
 			top[0]->mutable_cpu_data()[0] = loss;
-
-			//free memory space
-			delete bottom1_log;
 	}
 
 	template <typename Dtype>
