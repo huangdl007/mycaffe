@@ -50,6 +50,12 @@ namespace caffe {
 		while (infile >> image_filename >> depth_filename) {
 			lines_.push_back(std::make_pair(image_filename, depth_filename));
 		}
+
+		// randomly shuffle data
+		LOG(INFO) << "Shuffleing data";
+		const unsigned int prefetch_rng_seed = caffe_rng_rand();
+		prefetch_rng_.reset(new Caffe::RNG(prefetch_rng_seed));
+		ShuffleImages();
 		LOG(INFO) << "A total of " << lines_.size() << " images.";
 
 		lines_id_ = 0;
@@ -82,6 +88,13 @@ namespace caffe {
 		LOG(INFO) << "output depth size: " << label_shape[0] << ","
 			<< label_shape[1];
 		
+	}
+
+	template <typename Dtype>
+	void DepthDataLayer<Dtype>::ShuffleImages() {
+	  caffe::rng_t* prefetch_rng =
+	      static_cast<caffe::rng_t*>(prefetch_rng_->generator());
+	  shuffle(lines_.begin(), lines_.end(), prefetch_rng);
 	}
 
 	// This function is used to create a thread that prefetches the data.
@@ -147,6 +160,7 @@ namespace caffe {
 				// We have reached the end. Restart from the first.
 				DLOG(INFO) << "Restarting data prefetching from start.";
 				lines_id_ = 0;
+				ShuffleImages();
 			}
 		}
 		batch_timer.Stop();

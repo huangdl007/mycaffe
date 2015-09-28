@@ -260,6 +260,8 @@ public:
 	virtual inline int ExactNumTopBlobs() const { return 2; }
 
 protected:
+  shared_ptr<Caffe::RNG> prefetch_rng_;
+  virtual void ShuffleImages();
 	virtual void InternalThreadEntry();
 	virtual void ReadDepthToArray(const string& filename, float* depths);
 	int lines_id_;
