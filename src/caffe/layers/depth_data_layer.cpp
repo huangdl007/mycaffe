@@ -50,7 +50,8 @@ namespace caffe {
 		while (infile >> image_filename >> depth_filename) {
 			lines_.push_back(std::make_pair(image_filename, depth_filename));
 		}
-
+		infile.close();
+		
 		// randomly shuffle data
 		LOG(INFO) << "Shuffleing data";
 		const unsigned int prefetch_rng_seed = caffe_rng_rand();

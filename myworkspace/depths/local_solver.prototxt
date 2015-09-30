@@ -1,0 +1,18 @@
+net: "local_depth.prototxt"
+
+
+base_lr: 1e-5
+momentum: 0.9
+weight_decay: 0.0005
+
+lr_policy: "step"
+gamma: 0.1
+stepsize: 50000
+
+display: 1
+max_iter: 150000
+
+snapshot: 50000
+snapshot_prefix: "models/NYU_DEPTH_LOCAL_9_30"
+
+solver_mode: CPU
