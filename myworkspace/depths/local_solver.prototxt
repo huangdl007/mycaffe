@@ -9,10 +9,10 @@ lr_policy: "step"
 gamma: 0.1
 stepsize: 50000
 
-display: 1
+display: 50
 max_iter: 150000
 
 snapshot: 50000
 snapshot_prefix: "models/NYU_DEPTH_LOCAL_9_30"
 
-solver_mode: CPU
+solver_mode: GPU
