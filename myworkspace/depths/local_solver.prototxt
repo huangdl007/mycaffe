@@ -1,7 +1,7 @@
 net: "local_depth.prototxt"
 
 
-base_lr: 1e-5
+base_lr: 1e-6
 momentum: 0.9
 weight_decay: 0.0005
 
@@ -10,9 +10,9 @@ gamma: 0.1
 stepsize: 50000
 
 display: 50
-max_iter: 150000
+max_iter: 100000
 
 snapshot: 50000
-snapshot_prefix: "models/NYU_DEPTH_LOCAL_9_30"
+snapshot_prefix: "models/NYU_DEPTH_LOCAL_10_4
 
 solver_mode: GPU
