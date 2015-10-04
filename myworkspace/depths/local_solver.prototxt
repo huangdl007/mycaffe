@@ -13,6 +13,6 @@ display: 50
 max_iter: 100000
 
 snapshot: 50000
-snapshot_prefix: "models/NYU_DEPTH_LOCAL_10_4
+snapshot_prefix: "models/NYU_DEPTH_LOCAL_10_4"
 
 solver_mode: GPU
