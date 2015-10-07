@@ -5,7 +5,7 @@ layer{
 	top: "data"
 	top: "groundtruth_depth"
 	depth_data_param{
-		source: "source.txt"
+		source: "NYUSource.txt"
 		batch_size: 32
 	}
 }
