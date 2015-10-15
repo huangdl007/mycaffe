@@ -7,12 +7,12 @@ weight_decay: 0.0005
 
 lr_policy: "step"
 gamma: 0.1
-stepsize: 50000
+stepsize: 20000
 
 display: 50
-max_iter: 200000
+max_iter: 60000
 
-snapshot: 50000
-snapshot_prefix: "models/NYU_DEPTH_GLOBAL_10_7"
+snapshot: 20000
+snapshot_prefix: "models/NYU_DEPTH_GLOBAL_10_15"
 
 solver_mode: GPU
