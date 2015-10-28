@@ -330,6 +330,40 @@ class DepthLossLayer : public LossLayer<Dtype> {
   double gamma;
 };
 
+//BBFace Loss Layer
+template <typename Dtype>
+class BBFaceLossLayer : public LossLayer<Dtype> {
+ public:
+  explicit BBFaceLossLayer(const LayerParameter& param)
+      : LossLayer<Dtype>(param), diff_() {}
+  virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+
+  virtual inline const char* type() const { return "BBFaceLoss"; }
+  
+
+ protected:
+  /// @copydoc DepthLossLayer
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  //virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+  //    const vector<Blob<Dtype>*>& top);
+
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+  //virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+  //    const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+
+  Dtype computeDistance(int x, int y, int PartK_x, int PartK_y);
+  Blob<Dtype> diff_;
+  //H0
+  Blob<Dtype> H0_;
+  //H1-H0
+  Blob<Dtype> d_;
+  //Loss
+  Dtype loss_;
+};
+
 /**
  * @brief Computes the hinge loss for a one-of-many classification task.
  *

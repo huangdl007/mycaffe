@@ -271,6 +271,32 @@ protected:
 };
 
 /**
+ * @brief Provides data to the Net from image files and depth information from txt.
+ *
+ * TODO(dox): thorough documentation for Forward and proto params.
+ */
+template <typename Dtype>
+class BBFaceDataLayer : public BasePrefetchingDataLayer<Dtype> {
+public:
+  explicit BBFaceDataLayer(const LayerParameter& param)
+    : BasePrefetchingDataLayer<Dtype>(param) {}
+  virtual ~BBFaceDataLayer();
+  virtual void DataLayerSetUp(const vector<Blob<Dtype>*>& bottom,
+    const vector<Blob<Dtype>*>& top);
+
+  virtual inline const char* type() const { return "BBFaceData"; }
+  virtual inline int ExactNumBottomBlobs() const { return 0; }
+  virtual inline int ExactNumTopBlobs() const { return 2; }
+
+protected:
+  shared_ptr<Caffe::RNG> prefetch_rng_;
+  virtual void ShuffleImages();
+  virtual void InternalThreadEntry();
+  int lines_id_;
+  vector<std::pair<std::string, vector<int> > > lines_;
+};
+
+/**
  * @brief Provides data to the Net from memory.
  *
  * TODO(dox): thorough documentation for Forward and proto params.

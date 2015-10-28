@@ -269,7 +269,7 @@ message ParamSpec {
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available layer-specific ID: 138 (last added: depth_data_param)
+// LayerParameter next available layer-specific ID: 139 (last added: bbface_data_param)
 message LayerParameter {
   optional string name = 1; // the layer name
   optional string type = 2; // the layer type
@@ -332,6 +332,7 @@ message LayerParameter {
   optional HingeLossParameter hinge_loss_param = 114;
   optional ImageDataParameter image_data_param = 115;
   optional DepthDataParameter depth_data_param = 137;
+  optional BBFaceDataParameter bbface_data_param = 138;
   optional InfogainLossParameter infogain_loss_param = 116;
   optional InnerProductParameter inner_product_param = 117;
   optional LogParameter log_param = 134;
@@ -629,6 +630,21 @@ message DepthDataParameter {
   // data.
   optional bool mirror = 6 [default = false];
   optional string root_folder = 12 [default = ""];
+}
+
+message BBFaceDataParameter {
+  // Specify the data source.
+  optional string source = 1;
+  // Specify the batch size.
+  optional uint32 batch_size = 4;
+  // It will also resize images if new_height or new_width are not zero.
+  optional uint32 new_height = 9 [default = 0];
+  optional uint32 new_width = 10 [default = 0];
+  // Specify if the images are color or gray
+  optional bool is_color = 11 [default = true];
+  optional string mean_file = 3;
+  optional string root_folder = 12 [default = ""];
+  optional bool shuffle = 8 [default = false];
 }
 
 message InfogainLossParameter {
