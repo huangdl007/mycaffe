@@ -142,7 +142,7 @@ namespace caffe {
 			CHECK(cv_img.data) << "Could not load " << lines_[lines_id_].first;
 			read_time += timer.MicroSeconds();
 			timer.Start();
-			// Apply transformations (mirror, crop...) to the image
+			
 			int offset = this->prefetch_data_.offset(item_id);
 			this->transformed_data_.set_cpu_data(prefetch_data + offset);
 			this->data_transformer_->Transform(cv_img, &(this->transformed_data_));

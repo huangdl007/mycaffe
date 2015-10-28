@@ -9,7 +9,7 @@ layer{
 	  }
 	bbface_data_param{
 		source: "train.txt"
-		batch_size: 1
+		batch_size: 64
 		shuffle: true
 		root_folder: "data/"
 	}
@@ -24,7 +24,7 @@ layer{
 	  }
 	bbface_data_param{
 		source: "validation.txt"
-		batch_size: 1
+		batch_size: 64
 		shuffle: true
 		root_folder: "data/"
 	}
