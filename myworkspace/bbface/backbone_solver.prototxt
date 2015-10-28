@@ -1,0 +1,18 @@
+net: "backbone.prototxt"
+
+
+base_lr: 1e-4
+momentum: 0.9
+weight_decay: 0.0005
+
+lr_policy: "step"
+gamma: 0.1
+stepsize: 20000
+
+display: 100
+max_iter: 200000
+
+#snapshot: 50000
+#snapshot_prefix: "models/backbone_10_28"
+
+solver_mode: GPU
