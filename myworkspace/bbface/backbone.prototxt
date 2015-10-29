@@ -223,12 +223,6 @@ layer{
 	}
 }
 layer{
-	name: "relu6"
-	type: "ReLU"
-	top: "responsemap"
-	bottom: "responsemap"
-}
-layer{
 	name: "loss"
 	type: "BBFaceLoss"
 	top: "loss"
