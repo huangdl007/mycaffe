@@ -33,8 +33,8 @@ namespace caffe {
 		int center_x = receptiveX + width/2;
 		int center_y = receptiveY + width/2;
 
-		return sqrt( (partK_x-center_x)*(partK_x-center_x) + 
-					(partK_y-center_y)*(partK_y-center_y));
+		return Dtype(sqrt( (partK_x-center_x)*(partK_x-center_x) + 
+					(partK_y-center_y)*(partK_y-center_y)));
 	}
 
 	template <typename Dtype>
@@ -75,7 +75,14 @@ namespace caffe {
 							{
 								//compute distance between part k and patch center
 								Dtype r = computeDistance(j, k, partK_x, partK_y);
-								H0Data[slice*2000 + i*400 + j*20 + k] = exp(beta*r);
+								if(r == Dtype(-1))
+								{
+									H0Data[slice*2000 + i*400 + j*20 + k] = Dtype(0);
+								}
+								else
+								{
+									H0Data[slice*2000 + i*400 + j*20 + k] = exp(beta*r);
+								}
 							}
 						}
 					}
