@@ -16,6 +16,6 @@ test_iter: 200
 test_interval: 1000
 
 snapshot: 50000
-snapshot_prefix: "models/backbone_10_29"
+snapshot_prefix: "models/backbone_11_04"
 
 solver_mode: GPU
