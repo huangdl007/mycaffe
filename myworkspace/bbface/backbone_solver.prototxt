@@ -1,7 +1,7 @@
 net: "backbone.prototxt"
 
 
-base_lr: 1e-3
+base_lr: 1e-4
 momentum: 0.9
 weight_decay: 0.0005
 
@@ -16,6 +16,6 @@ test_iter: 200
 test_interval: 1000
 
 snapshot: 50000
-snapshot_prefix: "models/backbone_11_05"
+snapshot_prefix: "models/backbone_11_06"
 
 solver_mode: GPU
