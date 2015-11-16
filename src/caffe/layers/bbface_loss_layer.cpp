@@ -57,31 +57,31 @@ namespace caffe {
 			for(int slice = 0; slice < num; slice++)
 			{
 				int hasPartK = landmarkData[slice*11];
-				for(int i = 0; i < 5; i++)
+				for(int part = 0; part < 5; part++)
 				{
 					//coordinates x, y for part k
-					int partK_x = landmarkData[slice*11 + 1 + i*2];
-					int partK_y = landmarkData[slice*11 + 1 + i*2 + 1];
+					int partK_x = landmarkData[slice*11 + 1 + part*2];
+					int partK_y = landmarkData[slice*11 + 1 + part*2 + 1];
 					//compute each part separately
-					for(int j = 0; j < 20; j++)
+					for(int h = 0; h < 20; h++)
 					{
-						for(int k = 0; k < 20; k++)
+						for(int w = 0; w < 20; w++)
 						{
 							if(hasPartK == 0)
 							{
-								H0Data[slice*2000 + i*400 + j*20 + k] = Dtype(0);
+								H0Data[slice*2000 + part*400 + h*20 + w] = Dtype(0);
 							}
 							else
 							{
 								//compute distance between part k and patch center
-								Dtype r = computeDistance(j, k, partK_x, partK_y);
+								Dtype r = computeDistance(w, h, partK_x, partK_y);
 								if(r == Dtype(-1))
 								{
-									H0Data[slice*2000 + i*400 + j*20 + k] = Dtype(0);
+									H0Data[slice*2000 + part*400 + h*20 + w] = Dtype(0);
 								}
 								else
 								{
-									H0Data[slice*2000 + i*400 + j*20 + k] = exp(beta*r);
+									H0Data[slice*2000 + part*400 + h*20 + w] = exp(beta*r);
 								}
 							}
 						}
