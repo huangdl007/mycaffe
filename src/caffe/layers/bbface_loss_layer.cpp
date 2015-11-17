@@ -16,22 +16,54 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-	Dtype BBFaceLossLayer<Dtype>::computeDistance(int x, int y, int partK_x, int partK_y)
+	void BBFaceLossLayer<Dtype>::GetReceptiveField(vector<int>& region, const int kernel_size, const int stride,
+		const int pad, const int pool_size, const int max_x, const int max_y)
 	{
-		int stride = 5;
-		int width = 64;
-		int receptiveX = stride * x;
-		int receptiveY = stride * y;
+		// Old region
+		int x0 = region[0] * pool_size;
+		int y0 = region[1] * pool_size;
+		int x1 = region[2] * pool_size;
+		int y1 = region[3] * pool_size;
 
+		// Compute right bottom first
+		region[2] = kernel_size + (x1 - 1)*stride - pad;
+		region[3] = kernel_size + (y1 - 1)*stride - pad;
+
+		// Compute left top according to the right bottom
+		region[0] = region[2] - (x1 - x0 - 1)*stride - kernel_size;
+		region[1] = region[3] - (y1 - y0 - 1)*stride - kernel_size;
+		region[0] = region[0] > 0 ? region[0] : 0;
+		region[1] = region[1] > 0 ? region[1] : 0;
+
+		// Right bottom need to be LE max
+		region[2] = region[2] > max_x ? region[2] - pad : region[2];
+		region[3] = region[3] > max_y ? region[3] - pad : region[3];
+	}
+
+	template <typename Dtype>
+	Dtype BBFaceLossLayer<Dtype>::computeDistance(const int x, const int y, const int partK_x, const int partK_y)
+	{
+		// Build the original region
+		vector<int> region(4);
+		region[0] = x;
+		region[1] = y;
+		region[2] = x+1;
+		region[3] = y+1;
+
+		// Get the receptive feild layer by layer from bottom to top
+		GetReceptiveField(region, 9, 1, 4, 1, 20, 20);
+		GetReceptiveField(region, 5, 1, 2, 2, 40, 40);
+		GetReceptiveField(region, 5, 1, 2, 2, 80, 80);
+		GetReceptiveField(region, 5, 1, 2, 2, 160, 160);
 		//part k out of the receptive field
-		if( partK_x < receptiveX || partK_x > (receptiveX+width) || 
-			partK_y < receptiveY || partK_y > (receptiveY+width) )
+		if( partK_x < region[0] || partK_x > region[2] || 
+			partK_y < region[1] || partK_y > region[3] )
 		{
 			return Dtype(-1);
 		}
 
-		int center_x = receptiveX + width/2;
-		int center_y = receptiveY + width/2;
+		int center_x = (region[0] + region[2]) / 2;
+		int center_y = (region[1] + region[3]) / 2;
 
 		return Dtype(sqrt( (partK_x-center_x)*(partK_x-center_x) + 
 					(partK_y-center_y)*(partK_y-center_y)));

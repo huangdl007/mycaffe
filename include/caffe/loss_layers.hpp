@@ -354,7 +354,9 @@ class BBFaceLossLayer : public LossLayer<Dtype> {
   //virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
   //    const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
 
-  Dtype computeDistance(int x, int y, int PartK_x, int PartK_y);
+  void GetReceptiveField(vector<int>& region, const int kernel_size, const int stride,
+              const int pad, const int pool_size, const int max_x, const int max_y);
+  Dtype computeDistance(const int x, const int y, const int PartK_x, const int PartK_y);
   Blob<Dtype> diff_;
   //H0
   Blob<Dtype> H0_;
