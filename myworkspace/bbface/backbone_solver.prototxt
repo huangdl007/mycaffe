@@ -1,7 +1,7 @@
 net: "backbone.prototxt"
 
 
-base_lr: 1e-4
+base_lr: 1e-5
 momentum: 0.9
 weight_decay: 0.0005
 
@@ -9,10 +9,10 @@ lr_policy: "step"
 gamma: 0.1
 stepsize: 20000
 
-display: 100
+display: 10
 max_iter: 50000
 
-test_iter: 200
+test_iter: 50
 test_interval: 1000
 
 snapshot: 20000
