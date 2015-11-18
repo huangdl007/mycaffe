@@ -7,15 +7,15 @@ weight_decay: 0.0005
 
 lr_policy: "step"
 gamma: 0.1
-stepsize: 20000
+stepsize: 50000
 
-display: 10
+display: 100
 max_iter: 50000
 
 test_iter: 50
 test_interval: 1000
 
-snapshot: 20000
-snapshot_prefix: "models/backbone_11_17_2"
+snapshot: 50000
+snapshot_prefix: "models/backbone_11_18"
 
 solver_mode: GPU
