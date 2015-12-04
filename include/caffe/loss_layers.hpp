@@ -340,7 +340,9 @@ class BBFaceLossLayer : public LossLayer<Dtype> {
       const vector<Blob<Dtype>*>& top);
 
   virtual inline const char* type() const { return "BBFaceLoss"; }
-  
+  virtual inline int ExactNumTopBlobs() const { return 6;}
+  virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
 
  protected:
   /// @copydoc DepthLossLayer
@@ -356,7 +358,8 @@ class BBFaceLossLayer : public LossLayer<Dtype> {
 
   void GetReceptiveField(vector<int>& region, const int kernel_size, const int stride,
               const int pad, const int pool_size, const int max_x, const int max_y);
-  Dtype computeDistance(const int x, const int y, const int PartK_x, const int PartK_y);
+  void ComputeCenter(int& x, int& y);
+  Dtype ComputeDistance(const int x, const int y, const int PartK_x, const int PartK_y);
   Blob<Dtype> diff_;
   //H0
   Blob<Dtype> H0_;

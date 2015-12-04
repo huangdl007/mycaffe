@@ -342,6 +342,36 @@ class MemoryDataLayer : public BaseDataLayer<Dtype> {
 };
 
 /**
+ * @brief Provides unconstrained data to the Net from memory.
+ *
+ */
+template <typename Dtype>
+ class UnconstrainedDataLayer : public BaseDataLayer<Dtype> {
+  public:
+    explicit UnconstrainedDataLayer(const LayerParameter& param)
+        : BaseDataLayer<Dtype>(param), has_new_data_(false) {}
+    virtual void DataLayerSetUp(const vector<Blob<Dtype>*>& bottom,
+        const vector<Blob<Dtype>*>& top);
+    virtual inline const char* type() const { return "UnconstrainedData"; }
+    virtual inline int ExactNumBottomBlobs() const { return 0; }
+    virtual inline int ExactNumTopBlobs() const { return 1; }
+
+    virtual void AddMatInput(const cv::Mat& mat_input);
+
+    void Reset(Dtype* data);
+
+  protected:
+    virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+        const vector<Blob<Dtype>*>& top);
+
+    int channels_, height_, width_, size_;
+    Dtype* data_;
+    Blob<Dtype> added_data_;
+    bool has_new_data_;
+
+ };
+
+/**
  * @brief Provides data to the Net from windows of images files, specified
  *        by a window data file.
  *

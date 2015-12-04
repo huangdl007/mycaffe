@@ -7,12 +7,37 @@
 
 namespace caffe {
 
+	template<typename Dtype>
+	void BBFaceLossLayer<Dtype>::LayerSetUp(
+	    const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
+		// LossLayers have a non-zero (1) loss by default.
+		if (this->layer_param_.loss_weight_size() == 0) {
+			this->layer_param_.add_loss_weight(Dtype(1));
+		}
+
+		vector<int> shape(4, 1);
+		shape[0] = bottom[0]->num();
+		shape[3] = 2;
+		for(int i = 1; i < ExactNumTopBlobs(); ++i)
+		{
+			top[i]->Reshape(shape);
+		}
+	}
+
 	template <typename Dtype>
 	void BBFaceLossLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
 		LossLayer<Dtype>::Reshape(bottom, top);
 		diff_.ReshapeLike(*bottom[0]);
 		d_.ReshapeLike(*bottom[0]);
 		H0_.ReshapeLike(*bottom[0]);
+
+		vector<int> shape(4, 1);
+		shape[0] = bottom[0]->num();
+		shape[3] = 2;
+		for(int i = 1; i < ExactNumTopBlobs(); ++i)
+		{
+			top[i]->Reshape(shape);
+		}
 	}
 
 	template <typename Dtype>
@@ -41,7 +66,7 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
-	Dtype BBFaceLossLayer<Dtype>::computeDistance(const int x, const int y, const int partK_x, const int partK_y)
+	Dtype BBFaceLossLayer<Dtype>::ComputeDistance(const int x, const int y, const int partK_x, const int partK_y)
 	{
 		// Build the original region
 		vector<int> region(4);
@@ -70,6 +95,25 @@ namespace caffe {
 	}
 
 	template <typename Dtype>
+	void BBFaceLossLayer<Dtype>::ComputeCenter(int& x, int& y) {
+		// Build the original region
+		vector<int> region(4);
+		region[0] = x;
+		region[1] = y;
+		region[2] = x+1;
+		region[3] = y+1;
+
+		// Get the receptive feild layer by layer from bottom to top
+		GetReceptiveField(region, 9, 1, 4, 1, 20, 20);
+		GetReceptiveField(region, 5, 1, 2, 2, 40, 40);
+		GetReceptiveField(region, 5, 1, 2, 2, 80, 80);
+		GetReceptiveField(region, 5, 1, 2, 2, 160, 160);
+
+		x = (region[0] + region[2]) / 2;
+		y = (region[1] + region[3]) / 2;
+	}
+
+	template <typename Dtype>
 	void BBFaceLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 		const vector<Blob<Dtype>*>& top) {
 			int count = bottom[0]->count();
@@ -94,6 +138,9 @@ namespace caffe {
 					//coordinates x, y for part k
 					int partK_x = landmarkData[slice*11 + 1 + part*2];
 					int partK_y = landmarkData[slice*11 + 1 + part*2 + 1];
+
+					Dtype max_res = Dtype(0);
+					int x = 0, y = 0;
 					//compute each part separately
 					for(int h = 0; h < 20; h++)
 					{
@@ -106,7 +153,7 @@ namespace caffe {
 							else
 							{
 								//compute distance between part k and patch center
-								Dtype r = computeDistance(w, h, partK_x, partK_y);
+								Dtype r = ComputeDistance(w, h, partK_x, partK_y);
 								if(r == Dtype(-1))
 								{
 									H0Data[slice*2000 + part*400 + h*20 + w] = Dtype(0);
@@ -114,10 +161,23 @@ namespace caffe {
 								else
 								{
 									H0Data[slice*2000 + part*400 + h*20 + w] = exp(beta*r);
+									if(max_res < H0Data[slice*2000 + part*400 + h*20 + w])
+									{
+										max_res = H0Data[slice*2000 + part*400 + h*20 + w];
+										x = w;
+										y = h;
+									}
 								}
 							}
 						}
 					}
+					ComputeCenter(x, y);
+					int crop_h = y - 32 < 0 ? 0 : y - 32;
+					crop_h = y + 32 > 160 ? 160 - 64 : crop_h;
+					int crop_w = x - 32 < 0 ? 0 : x - 32;
+					crop_w = x + 32 > 160 ? 160 - 64 : crop_w;
+					top[part+1]->mutable_cpu_data()[slice*2 + 0] = crop_h;
+					top[part+1]->mutable_cpu_data()[slice*2 + 1] = crop_w;
 				}
 			}
 
@@ -157,7 +217,7 @@ namespace caffe {
 	}
 
 //#ifdef CPU_ONLY
-//STUB_GPU(DepthLossLayer);
+//STUB_GPU(BBFaceLossLayer);
 //#endif
 
 INSTANTIATE_CLASS(BBFaceLossLayer);

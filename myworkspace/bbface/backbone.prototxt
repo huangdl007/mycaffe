@@ -232,6 +232,11 @@ layer{
 	name: "loss"
 	type: "BBFaceLoss"
 	top: "loss"
+	top: "LECrop"
+	top: "RECrop"
+	top: "NOCrop"
+	top: "LMCrop"
+	top: "RMCrop"
 	bottom: "responsemap"
 	bottom: "landmarks"
 }
