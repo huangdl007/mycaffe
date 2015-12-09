@@ -17,7 +17,7 @@ namespace caffe {
 
 		vector<int> shape(4, 1);
 		shape[0] = bottom[0]->num();
-		shape[3] = 2;
+		shape[3] = 3;
 		for(int i = 1; i < ExactNumTopBlobs(); ++i)
 		{
 			top[i]->Reshape(shape);
@@ -27,13 +27,12 @@ namespace caffe {
 	template <typename Dtype>
 	void BBFaceLossLayer<Dtype>::Reshape(const vector<Blob<Dtype>*>& bottom, const vector<Blob<Dtype>*>& top) {
 		LossLayer<Dtype>::Reshape(bottom, top);
-		diff_.ReshapeLike(*bottom[0]);
 		d_.ReshapeLike(*bottom[0]);
 		H0_.ReshapeLike(*bottom[0]);
 
 		vector<int> shape(4, 1);
 		shape[0] = bottom[0]->num();
-		shape[3] = 2;
+		shape[3] = 3;
 		for(int i = 1; i < ExactNumTopBlobs(); ++i)
 		{
 			top[i]->Reshape(shape);
@@ -176,8 +175,9 @@ namespace caffe {
 					crop_h = y + 32 > 160 ? 160 - 64 : crop_h;
 					int crop_w = x - 32 < 0 ? 0 : x - 32;
 					crop_w = x + 32 > 160 ? 160 - 64 : crop_w;
-					top[part+1]->mutable_cpu_data()[slice*2 + 0] = crop_h;
-					top[part+1]->mutable_cpu_data()[slice*2 + 1] = crop_w;
+					top[part+1]->mutable_cpu_data()[slice*2 + 0] = part;
+					top[part+1]->mutable_cpu_data()[slice*2 + 1] = crop_h;
+					top[part+1]->mutable_cpu_data()[slice*2 + 2] = crop_w;
 				}
 			}
 

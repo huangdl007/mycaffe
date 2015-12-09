@@ -335,7 +335,7 @@ template <typename Dtype>
 class BBFaceLossLayer : public LossLayer<Dtype> {
  public:
   explicit BBFaceLossLayer(const LayerParameter& param)
-      : LossLayer<Dtype>(param), diff_() {}
+      : LossLayer<Dtype>(param) {}
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
 
@@ -360,7 +360,6 @@ class BBFaceLossLayer : public LossLayer<Dtype> {
               const int pad, const int pool_size, const int max_x, const int max_y);
   void ComputeCenter(int& x, int& y);
   Dtype ComputeDistance(const int x, const int y, const int PartK_x, const int PartK_y);
-  Blob<Dtype> diff_;
   //H0
   Blob<Dtype> H0_;
   //H1-H0
@@ -369,6 +368,38 @@ class BBFaceLossLayer : public LossLayer<Dtype> {
   Dtype loss_;
 };
 
+//BBFace Loss Layer
+template <typename Dtype>
+class BHFaceLossLayer : public LossLayer<Dtype> {
+ public:
+  explicit BHFaceLossLayer(const LayerParameter& param)
+      : LossLayer<Dtype>(param) {}
+  virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+
+  virtual inline int ExactNumBottomBlobs() const { return 3; }
+  virtual inline const char* type() const { return "BHFaceLoss"; }
+
+ protected:
+  /// @copydoc DepthLossLayer
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+  //virtual void Forward_gpu(const vector<Blob<Dtype>*>& bottom,
+  //    const vector<Blob<Dtype>*>& top);
+
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+  //virtual void Backward_gpu(const vector<Blob<Dtype>*>& top,
+  //    const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom);
+
+  Dtype ComputeDistance(const int x, const int y, const int PartK_x, const int PartK_y);
+  //H0
+  Blob<Dtype> H0_;
+  //H1-H0
+  Blob<Dtype> d_;
+  //Loss
+  Dtype loss_;
+};
 /**
  * @brief Computes the hinge loss for a one-of-many classification task.
  *
