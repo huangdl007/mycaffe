@@ -46,8 +46,8 @@ void BHFaceCropLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 
 	for(int n = 0; n < top[0]->num(); ++n)
 	{	
-		const int start_h = (int)window_size[n*2 + 0];
-		const int start_w = (int)window_size[n*2 + 1];
+		const int start_h = (int)window_size[n*3 + 1];
+		const int start_w = (int)window_size[n*3 + 2];
 		CHECK(start_h + top[0]->height() <= bottom[0]->height() &&
 				start_w + top[0]->width() <= bottom[0]->width())
 		 	<< "Crop patch must inside the previous layer.";
@@ -76,8 +76,8 @@ void BHFaceCropLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
 
 		for(int n = 0; n < top[0]->num(); ++n)
 		{
-			const int start_h = (int)window_size[n*2 + 0];
-			const int start_w = (int)window_size[n*2 + 1];
+			const int start_h = (int)window_size[n*3 + 1];
+			const int start_w = (int)window_size[n*3 + 2];
 			for(int c = 0; c < top[0]->channels(); ++c)
 			{
 				for(int h = 0; h < top[0]->height(); ++h)

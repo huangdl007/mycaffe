@@ -175,9 +175,9 @@ namespace caffe {
 					crop_h = y + 32 > 160 ? 160 - 64 : crop_h;
 					int crop_w = x - 32 < 0 ? 0 : x - 32;
 					crop_w = x + 32 > 160 ? 160 - 64 : crop_w;
-					top[part+1]->mutable_cpu_data()[slice*2 + 0] = part;
-					top[part+1]->mutable_cpu_data()[slice*2 + 1] = crop_h;
-					top[part+1]->mutable_cpu_data()[slice*2 + 2] = crop_w;
+					top[part+1]->mutable_cpu_data()[slice*3 + 0] = part;
+					top[part+1]->mutable_cpu_data()[slice*3 + 1] = crop_h;
+					top[part+1]->mutable_cpu_data()[slice*3 + 2] = crop_w;
 				}
 			}
 
