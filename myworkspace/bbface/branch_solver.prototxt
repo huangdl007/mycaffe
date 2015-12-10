@@ -10,7 +10,7 @@ gamma: 0.1
 stepsize: 40000
 
 display: 100
-max_iter: 600000
+max_iter: 60000
 
 test_iter: 50
 test_interval: 1000
