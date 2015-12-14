@@ -49,12 +49,12 @@ namespace caffe {
 				const int partK_y = landmarkData[slice*11 + 1 + part*2 + 1];
 				const int startX = startXYData[slice*3 + 1];
 				const int startY = startXYData[slice*3 + 2];
-
+				bool isInsided = partK_x>=startX && partK_x-startX<64 && partK_y>=startY && partK_y-startY<64;
 				for(int h = 0; h < height; h++)
 				{
 					for(int w = 0; w < width; w++)
 					{
-						if(hasPartK == 0)
+						if(hasPartK == 0 || !isInsided)
 						{
 							H0Data[slice*length + h*height + w] = Dtype(0);
 						}
