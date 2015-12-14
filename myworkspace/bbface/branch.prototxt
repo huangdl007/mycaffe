@@ -258,8 +258,8 @@ layer{
 	type: "Convolution"
 	top: "NOConv1"
 	bottom: "NOCrop"
-	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 0.01 decay_mult: 1 }
+	param { lr_mult: 0.02 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 5
@@ -286,8 +286,8 @@ layer{
 	type: "Convolution"
 	top: "NOConv2"
 	bottom: "NOConv1"
-	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 0.01 decay_mult: 1 }
+	param { lr_mult: 0.02 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 7
@@ -314,8 +314,8 @@ layer{
 	type: "Convolution"
 	top: "NOConv3"
 	bottom: "NOConv2"
-	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 0.01 decay_mult: 1 }
+	param { lr_mult: 0.02 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 9
@@ -342,8 +342,8 @@ layer{
 	type: "Convolution"
 	top: "NOResponseMap"
 	bottom: "NOConv3"
-	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 0.01 decay_mult: 1 }
+	param { lr_mult: 0.02 decay_mult: 0 }
 	convolution_param{
 		num_output: 1
 		kernel_size: 1
