@@ -3,7 +3,8 @@
 TOOLS=./../../build/tools
 
 $TOOLS/caffe train \
-    --solver=branch_solver.prototxt
+    --solver=branch_solver.prototxt \
+    --weights=models/backbone_11_18_iter_50000.caffemodel
 
 # reduce learning rate by factor of 10
 #$TOOLS/caffe train \
