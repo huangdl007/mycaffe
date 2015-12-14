@@ -258,8 +258,8 @@ layer{
 	type: "Convolution"
 	top: "REConv1"
 	bottom: "RECrop"
-	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 5
@@ -286,8 +286,8 @@ layer{
 	type: "Convolution"
 	top: "REConv2"
 	bottom: "REConv1"
-	param { lr_mult: 1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 7
@@ -314,8 +314,8 @@ layer{
 	type: "Convolution"
 	top: "REConv3"
 	bottom: "REConv2"
-	param { lr_mult: 0.1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 9
@@ -342,8 +342,8 @@ layer{
 	type: "Convolution"
 	top: "REResponseMap"
 	bottom: "REConv3"
-	param { lr_mult: 0.1 decay_mult: 1 }
-	param { lr_mult: 2 decay_mult: 0 }
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 1
 		kernel_size: 1
