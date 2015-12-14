@@ -138,8 +138,6 @@ namespace caffe {
 					int partK_x = landmarkData[slice*11 + 1 + part*2];
 					int partK_y = landmarkData[slice*11 + 1 + part*2 + 1];
 
-					Dtype max_res = Dtype(0);
-					int x = 0, y = 0;
 					//compute each part separately
 					for(int h = 0; h < 20; h++)
 					{
@@ -160,13 +158,31 @@ namespace caffe {
 								else
 								{
 									H0Data[slice*2000 + part*400 + h*20 + w] = exp(beta*r);
-									if(max_res < H0Data[slice*2000 + part*400 + h*20 + w])
-									{
-										max_res = H0Data[slice*2000 + part*400 + h*20 + w];
-										x = w;
-										y = h;
-									}
 								}
+							}
+						}
+					}
+					
+				}
+			}
+			// Compute crop window
+			const Dtype* responsemap = bottom[0]->cpu_data();
+			for(int slice = 0; slice < bottom[0]->num(); slice++)
+			{
+				for(int part = 0; part < bottom[0]->channels(); part++)
+				{
+					Dtype max_res = Dtype(0);
+					int x = 0, y = 0;
+					for(int h = 0; h < bottom[0]->height(); h++)
+					{
+						for(int w = 0; w < bottom[0]->width(); w++)
+						{
+							int offset = bottom[0]->offset(slice, part, h, w);
+							if(max_res < responsemap[offset])
+							{
+								max_res = responsemap[offset];
+								x = w;
+								y = h;
 							}
 						}
 					}

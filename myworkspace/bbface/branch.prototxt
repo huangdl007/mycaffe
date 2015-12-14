@@ -340,7 +340,7 @@ layer{
 layer{
 	name: "LEconv4"
 	type: "Convolution"
-	top: "LEReponseMap"
+	top: "LEResponseMap"
 	bottom: "LEConv3"
 	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
@@ -361,14 +361,14 @@ layer{
 layer{
 	name: "LERelu4"
 	type: "ReLU"
-	top: "LEReponseMap"
-	bottom: "LEReponseMap"
+	top: "LEResponseMap"
+	bottom: "LEResponseMap"
 }
 layer{
 	name: "LELoss"
 	type: "BHFaceLoss"
 	top: "LELoss"
-	bottom: "LEReponseMap"
+	bottom: "LEResponseMap"
 	bottom: "landmarks"
 	bottom: "LEStartXY"
 }
@@ -466,7 +466,7 @@ layer{
 layer{
 	name: "REconv4"
 	type: "Convolution"
-	top: "REReponseMap"
+	top: "REResponseMap"
 	bottom: "REConv3"
 	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
@@ -487,14 +487,14 @@ layer{
 layer{
 	name: "RERelu4"
 	type: "ReLU"
-	top: "REReponseMap"
-	bottom: "REReponseMap"
+	top: "REResponseMap"
+	bottom: "REResponseMap"
 }
 layer{
 	name: "RELoss"
 	type: "BHFaceLoss"
 	top: "RELoss"
-	bottom: "REReponseMap"
+	bottom: "REResponseMap"
 	bottom: "landmarks"
 	bottom: "REStartXY"
 }
@@ -592,7 +592,7 @@ layer{
 layer{
 	name: "NOconv4"
 	type: "Convolution"
-	top: "NOReponseMap"
+	top: "NOResponseMap"
 	bottom: "NOConv3"
 	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
@@ -613,14 +613,14 @@ layer{
 layer{
 	name: "NORelu4"
 	type: "ReLU"
-	top: "NOReponseMap"
-	bottom: "NOReponseMap"
+	top: "NOResponseMap"
+	bottom: "NOResponseMap"
 }
 layer{
 	name: "NOLoss"
 	type: "BHFaceLoss"
 	top: "NOLoss"
-	bottom: "NOReponseMap"
+	bottom: "NOResponseMap"
 	bottom: "landmarks"
 	bottom: "NOStartXY"
 }
@@ -718,7 +718,7 @@ layer{
 layer{
 	name: "LMconv4"
 	type: "Convolution"
-	top: "LMReponseMap"
+	top: "LMResponseMap"
 	bottom: "LMConv3"
 	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
@@ -739,14 +739,14 @@ layer{
 layer{
 	name: "LMRelu4"
 	type: "ReLU"
-	top: "LMReponseMap"
-	bottom: "LMReponseMap"
+	top: "LMResponseMap"
+	bottom: "LMResponseMap"
 }
 layer{
 	name: "LMLoss"
 	type: "BHFaceLoss"
 	top: "LMLoss"
-	bottom: "LMReponseMap"
+	bottom: "LMResponseMap"
 	bottom: "landmarks"
 	bottom: "LMStartXY"
 }
@@ -844,7 +844,7 @@ layer{
 layer{
 	name: "RMconv4"
 	type: "Convolution"
-	top: "RMReponseMap"
+	top: "RMResponseMap"
 	bottom: "RMConv3"
 	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
@@ -865,14 +865,14 @@ layer{
 layer{
 	name: "RMrelu4"
 	type: "ReLU"
-	top: "RMReponseMap"
-	bottom: "RMReponseMap"
+	top: "RMResponseMap"
+	bottom: "RMResponseMap"
 }
 layer{
 	name: "RMLoss"
 	type: "BHFaceLoss"
 	top: "RMLoss"
-	bottom: "RMReponseMap"
+	bottom: "RMResponseMap"
 	bottom: "landmarks"
 	bottom: "RMStartXY"
 }

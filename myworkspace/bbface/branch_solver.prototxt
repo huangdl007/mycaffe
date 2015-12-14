@@ -9,13 +9,13 @@ lr_policy: "step"
 gamma: 0.1
 stepsize: 40000
 
-display: 100
+display: 50
 max_iter: 60000
 
 test_iter: 50
 test_interval: 1000
 
 snapshot: 20000
-snapshot_prefix: "models/branch_12_10"
+snapshot_prefix: "models/branch_12_11"
 
 solver_mode: GPU
