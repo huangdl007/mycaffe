@@ -1,7 +1,7 @@
 net: "branch.prototxt"
 
 
-base_lr: 1e-5
+base_lr: 1e-6
 momentum: 0.9
 weight_decay: 0.0005
 
