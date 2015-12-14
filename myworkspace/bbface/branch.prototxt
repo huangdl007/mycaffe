@@ -247,19 +247,19 @@ layer{
 	bottom: "landmarks"
 }
 layer{
-	name: "RMCrop"
+	name: "RECrop"
 	type: "BHFaceCrop"
 	bottom: "conv1"
-	bottom: "RMStartXY"
-	top: "RMCrop"
+	bottom: "REStartXY"
+	top: "RECrop"
 }
 layer{
-	name: "RMConv1"
+	name: "REConv1"
 	type: "Convolution"
-	top: "RMConv1"
-	bottom: "RMCrop"
-	param { lr_mult: 0.01 decay_mult: 1 }
-	param { lr_mult: 0.02 decay_mult: 0 }
+	top: "REConv1"
+	bottom: "RECrop"
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 5
@@ -276,18 +276,18 @@ layer{
 	}
 }
 layer{
-	name: "RMRelu1"
+	name: "RERelu1"
 	type: "ReLU"
-	top: "RMConv1"
-	bottom: "RMConv1"
+	top: "REConv1"
+	bottom: "REConv1"
 }
 layer{
-	name: "RMConv2"
+	name: "REConv2"
 	type: "Convolution"
-	top: "RMConv2"
-	bottom: "RMConv1"
-	param { lr_mult: 0.01 decay_mult: 1 }
-	param { lr_mult: 0.02 decay_mult: 0 }
+	top: "REConv2"
+	bottom: "REConv1"
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 7
@@ -304,18 +304,18 @@ layer{
 	}
 }
 layer{
-	name: "RMRelu2"
+	name: "RERelu2"
 	type: "ReLU"
-	top: "RMConv2"
-	bottom: "RMConv2"
+	top: "REConv2"
+	bottom: "REConv2"
 }
 layer{
-	name: "RMConv3"
+	name: "REConv3"
 	type: "Convolution"
-	top: "RMConv3"
-	bottom: "RMConv2"
-	param { lr_mult: 0.01 decay_mult: 1 }
-	param { lr_mult: 0.02 decay_mult: 0 }
+	top: "REConv3"
+	bottom: "REConv2"
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
 		kernel_size: 9
@@ -332,18 +332,18 @@ layer{
 	}
 }
 layer{
-	name: "RMRelu3"
+	name: "RERelu3"
 	type: "ReLU"
-	top: "RMConv3"
-	bottom: "RMConv3"
+	top: "REConv3"
+	bottom: "REConv3"
 }
 layer{
-	name: "RMconv4"
+	name: "REconv4"
 	type: "Convolution"
-	top: "RMResponseMap"
-	bottom: "RMConv3"
-	param { lr_mult: 0.01 decay_mult: 1 }
-	param { lr_mult: 0.02 decay_mult: 0 }
+	top: "REResponseMap"
+	bottom: "REConv3"
+	param { lr_mult: 10 decay_mult: 1 }
+	param { lr_mult: 20 decay_mult: 0 }
 	convolution_param{
 		num_output: 1
 		kernel_size: 1
@@ -359,16 +359,16 @@ layer{
 	}
 }
 layer{
-	name: "RMrelu4"
+	name: "RERelu4"
 	type: "ReLU"
-	top: "RMResponseMap"
-	bottom: "RMResponseMap"
+	top: "REResponseMap"
+	bottom: "REResponseMap"
 }
 layer{
-	name: "RMLoss"
+	name: "RELoss"
 	type: "BHFaceLoss"
-	top: "RMLoss"
-	bottom: "RMResponseMap"
+	top: "RELoss"
+	bottom: "REResponseMap"
 	bottom: "landmarks"
-	bottom: "RMStartXY"
+	bottom: "REStartXY"
 }
