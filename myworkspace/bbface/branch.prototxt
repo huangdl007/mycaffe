@@ -314,7 +314,7 @@ layer{
 	type: "Convolution"
 	top: "REConv3"
 	bottom: "REConv2"
-	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 0.1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
@@ -342,7 +342,7 @@ layer{
 	type: "Convolution"
 	top: "REResponseMap"
 	bottom: "REConv3"
-	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 0.1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 1
