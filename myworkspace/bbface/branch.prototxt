@@ -258,7 +258,7 @@ layer{
 	type: "Convolution"
 	top: "LEConv1"
 	bottom: "LECrop"
-	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 0.01 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
@@ -286,7 +286,7 @@ layer{
 	type: "Convolution"
 	top: "LEConv2"
 	bottom: "LEConv1"
-	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 0.01 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
@@ -314,7 +314,7 @@ layer{
 	type: "Convolution"
 	top: "LEConv3"
 	bottom: "LEConv2"
-	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 0.01 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
@@ -342,7 +342,7 @@ layer{
 	type: "Convolution"
 	top: "LEResponseMap"
 	bottom: "LEConv3"
-	param { lr_mult: 1 decay_mult: 1 }
+	param { lr_mult: 0.01 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 1
