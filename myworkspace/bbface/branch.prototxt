@@ -247,18 +247,18 @@ layer{
 	bottom: "landmarks"
 }
 layer{
-	name: "LECrop"
+	name: "RECrop"
 	type: "BHFaceCrop"
 	bottom: "conv1"
-	bottom: "LEStartXY"
-	top: "LECrop"
+	bottom: "REStartXY"
+	top: "RECrop"
 }
 layer{
-	name: "LEConv1"
+	name: "REConv1"
 	type: "Convolution"
-	top: "LEConv1"
-	bottom: "LECrop"
-	param { lr_mult: 0.1 decay_mult: 1 }
+	top: "REConv1"
+	bottom: "RECrop"
+	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
@@ -276,17 +276,17 @@ layer{
 	}
 }
 layer{
-	name: "LERelu1"
+	name: "RERelu1"
 	type: "ReLU"
-	top: "LEConv1"
-	bottom: "LEConv1"
+	top: "REConv1"
+	bottom: "REConv1"
 }
 layer{
-	name: "LEConv2"
+	name: "REConv2"
 	type: "Convolution"
-	top: "LEConv2"
-	bottom: "LEConv1"
-	param { lr_mult: 0.1 decay_mult: 1 }
+	top: "REConv2"
+	bottom: "REConv1"
+	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
@@ -304,17 +304,17 @@ layer{
 	}
 }
 layer{
-	name: "LERelu2"
+	name: "RERelu2"
 	type: "ReLU"
-	top: "LEConv2"
-	bottom: "LEConv2"
+	top: "REConv2"
+	bottom: "REConv2"
 }
 layer{
-	name: "LEConv3"
+	name: "REConv3"
 	type: "Convolution"
-	top: "LEConv3"
-	bottom: "LEConv2"
-	param { lr_mult: 0.1 decay_mult: 1 }
+	top: "REConv3"
+	bottom: "REConv2"
+	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 16
@@ -332,17 +332,17 @@ layer{
 	}
 }
 layer{
-	name: "LERelu3"
+	name: "RERelu3"
 	type: "ReLU"
-	top: "LEConv3"
-	bottom: "LEConv3"
+	top: "REConv3"
+	bottom: "REConv3"
 }
 layer{
-	name: "LEconv4"
+	name: "REconv4"
 	type: "Convolution"
-	top: "LEResponseMap"
-	bottom: "LEConv3"
-	param { lr_mult: 0.1 decay_mult: 1 }
+	top: "REResponseMap"
+	bottom: "REConv3"
+	param { lr_mult: 1 decay_mult: 1 }
 	param { lr_mult: 2 decay_mult: 0 }
 	convolution_param{
 		num_output: 1
@@ -359,16 +359,16 @@ layer{
 	}
 }
 layer{
-	name: "LERelu4"
+	name: "RERelu4"
 	type: "ReLU"
-	top: "LEResponseMap"
-	bottom: "LEResponseMap"
+	top: "REResponseMap"
+	bottom: "REResponseMap"
 }
 layer{
-	name: "LELoss"
+	name: "RELoss"
 	type: "BHFaceLoss"
-	top: "LELoss"
-	bottom: "LEResponseMap"
+	top: "RELoss"
+	bottom: "REResponseMap"
 	bottom: "landmarks"
-	bottom: "LEStartXY"
+	bottom: "REStartXY"
 }
